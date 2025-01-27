@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Smile, Angry, Frown, Meh, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 interface MoodOption {
   icon: React.ComponentType<React.ComponentProps<typeof Smile>>;
@@ -51,22 +52,19 @@ const moodOptions: MoodOption[] = [
 
 export const MoodSidebar = () => {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleMoodSelect = (mood: MoodOption) => {
     setSelectedMood(mood.label);
     
-    // Show toast with quote and music recommendation
-    toast("Mood Update", {
-      description: (
-        <div className="space-y-2">
-          <p className="font-medium">Quote for you:</p>
-          <p className="text-sm italic">"{mood.quote}"</p>
-          <p className="font-medium mt-2">Music Recommendation:</p>
-          <p className="text-sm">🎵 {mood.music}</p>
-        </div>
-      ),
-      duration: 5000,
+    // Show toast notification
+    toast("Mood Selected", {
+      description: "Taking you to your personalized space...",
+      duration: 2000,
     });
+
+    // Navigate to the mood page with the selected mood data
+    navigate("/mood", { state: { mood } });
   };
 
   return (
