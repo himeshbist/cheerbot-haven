@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChatMessage } from "@/components/ChatMessage";
 import { Resources } from "@/components/Resources";
-import { Send, Heart, Bell } from "lucide-react";
+import { Send, Heart, Bell, Menu } from "lucide-react";
 import { toast } from "sonner";
 import { MoodSidebar } from "@/components/MoodSidebar";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface Message {
   text: string;
@@ -28,6 +29,7 @@ const Index = () => {
     },
   ]);
   const [input, setInput] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -67,14 +69,27 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F5F3FF] to-[#EFF6FF] p-4">
       <div className="flex w-full max-w-6xl mx-auto">
-        <MoodSidebar />
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 bg-transparent border-none">
+            <MoodSidebar />
+          </SheetContent>
+        </Sheet>
+
+        <div className="hidden md:block">
+          <MoodSidebar />
+        </div>
         
         <div className="flex-1">
           {/* Header with Logo and Notification */}
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary animate-pulse" />
-              <span className="text-xl font-semibold text-primary">CheerBot Haven</span>
+              <span className="text-xl font-semibold text-primary">MindEase</span>
             </div>
             <Button
               variant="ghost"
@@ -88,9 +103,9 @@ const Index = () => {
 
           <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-4 mb-4 transition-all duration-300 hover:shadow-xl">
             <div className="text-center mb-6">
-              <h1 className="text-2xl font-semibold text-primary mb-2">Supportive AI Chat</h1>
+              <h1 className="text-2xl font-semibold text-primary mb-2">Your Safe Space for Emotional Support</h1>
               <p className="text-sm text-gray-600">
-                I'm here to listen and support you. While I can offer a caring ear, please remember I'm not a replacement for professional help.
+                Share your feelings and receive personalized support, quotes, and music recommendations.
               </p>
             </div>
 
