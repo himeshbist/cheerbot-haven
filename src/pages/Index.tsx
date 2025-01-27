@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChatMessage } from "@/components/ChatMessage";
 import { Resources } from "@/components/Resources";
-import { Send } from "lucide-react";
+import { Send, Heart, Bell } from "lucide-react";
 import { toast } from "sonner";
 
 interface Message {
@@ -41,21 +41,17 @@ const Index = () => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // Add user message
     const userMessage = { text: input, isBot: false };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // Simulate AI thinking
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Add bot response
     const randomResponse =
       supportiveResponses[Math.floor(Math.random() * supportiveResponses.length)];
     const botMessage = { text: randomResponse, isBot: true };
     setMessages((prev) => [...prev, botMessage]);
 
-    // Show helpful toast for longer messages
     if (input.length > 50) {
       toast("Remember, I'm here to support you, but please reach out to a mental health professional for personalized help.", {
         duration: 5000,
@@ -63,9 +59,29 @@ const Index = () => {
     }
   };
 
+  const handleNotificationClick = () => {
+    toast("No new notifications", { duration: 3000 });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F5F3FF] to-[#EFF6FF] p-4">
       <div className="max-w-2xl mx-auto">
+        {/* Header with Logo and Notification */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-2">
+            <Heart className="w-8 h-8 text-primary" />
+            <span className="text-xl font-semibold text-primary">CheerBot Haven</span>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleNotificationClick}
+            className="hover:bg-primary/10"
+          >
+            <Bell className="w-6 h-6 text-primary" />
+          </Button>
+        </div>
+
         <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-4 mb-4">
           <div className="text-center mb-6">
             <h1 className="text-2xl font-semibold text-primary mb-2">Supportive AI Chat</h1>
