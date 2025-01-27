@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 interface MoodOption {
-  icon: React.ComponentType;
+  icon: React.ComponentType<React.ComponentProps<typeof Smile>>;
   label: string;
   color: string;
 }
@@ -31,20 +31,23 @@ export const MoodSidebar = () => {
     <div className="w-64 bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-lg h-[calc(100vh-2rem)] mr-4 animate-fade-in">
       <h2 className="text-lg font-semibold text-primary mb-4">How are you feeling?</h2>
       <div className="space-y-2">
-        {moodOptions.map((mood) => (
-          <button
-            key={mood.label}
-            onClick={() => handleMoodSelect(mood.label)}
-            className={cn(
-              "w-full p-3 rounded-lg flex items-center gap-3 transition-all duration-200",
-              mood.color,
-              selectedMood === mood.label && "ring-2 ring-primary"
-            )}
-          >
-            <mood.icon className="w-5 h-5" />
-            <span>{mood.label}</span>
-          </button>
-        ))}
+        {moodOptions.map((mood) => {
+          const Icon = mood.icon;
+          return (
+            <button
+              key={mood.label}
+              onClick={() => handleMoodSelect(mood.label)}
+              className={cn(
+                "w-full p-3 rounded-lg flex items-center gap-3 transition-all duration-200",
+                mood.color,
+                selectedMood === mood.label && "ring-2 ring-primary"
+              )}
+            >
+              <Icon className="w-5 h-5" />
+              <span>{mood.label}</span>
+            </button>
+          );
+        })}
       </div>
       
       <div className="mt-6 p-4 bg-primary/10 rounded-lg">
