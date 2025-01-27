@@ -5,6 +5,7 @@ import { ChatMessage } from "@/components/ChatMessage";
 import { Resources } from "@/components/Resources";
 import { Send, Heart, Bell } from "lucide-react";
 import { toast } from "sonner";
+import { MoodSidebar } from "@/components/MoodSidebar";
 
 interface Message {
   text: string;
@@ -65,56 +66,60 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#F5F3FF] to-[#EFF6FF] p-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header with Logo and Notification */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center gap-2">
-            <Heart className="w-8 h-8 text-primary" />
-            <span className="text-xl font-semibold text-primary">CheerBot Haven</span>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleNotificationClick}
-            className="hover:bg-primary/10"
-          >
-            <Bell className="w-6 h-6 text-primary" />
-          </Button>
-        </div>
-
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-4 mb-4">
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-semibold text-primary mb-2">Supportive AI Chat</h1>
-            <p className="text-sm text-gray-600">
-              I'm here to listen and support you. While I can offer a caring ear, please remember I'm not a replacement for professional help.
-            </p>
-          </div>
-
-          <div className="h-[400px] overflow-y-auto mb-4 space-y-4">
-            {messages.map((message, index) => (
-              <ChatMessage
-                key={index}
-                message={message.text}
-                isBot={message.isBot}
-              />
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-
-          <form onSubmit={handleSend} className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Share how you're feeling..."
-              className="flex-1"
-            />
-            <Button type="submit" className="bg-primary hover:bg-primary/90">
-              <Send className="w-4 h-4" />
+      <div className="flex w-full max-w-6xl mx-auto">
+        <MoodSidebar />
+        
+        <div className="flex-1">
+          {/* Header with Logo and Notification */}
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center gap-2">
+              <Heart className="w-8 h-8 text-primary animate-pulse" />
+              <span className="text-xl font-semibold text-primary">CheerBot Haven</span>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleNotificationClick}
+              className="hover:bg-primary/10"
+            >
+              <Bell className="w-6 h-6 text-primary" />
             </Button>
-          </form>
-        </div>
+          </div>
 
-        <Resources />
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-4 mb-4 transition-all duration-300 hover:shadow-xl">
+            <div className="text-center mb-6">
+              <h1 className="text-2xl font-semibold text-primary mb-2">Supportive AI Chat</h1>
+              <p className="text-sm text-gray-600">
+                I'm here to listen and support you. While I can offer a caring ear, please remember I'm not a replacement for professional help.
+              </p>
+            </div>
+
+            <div className="h-[400px] overflow-y-auto mb-4 space-y-4 pr-4">
+              {messages.map((message, index) => (
+                <ChatMessage
+                  key={index}
+                  message={message.text}
+                  isBot={message.isBot}
+                />
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <form onSubmit={handleSend} className="flex gap-2">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Share how you're feeling..."
+                className="flex-1"
+              />
+              <Button type="submit" className="bg-primary hover:bg-primary/90 transition-colors">
+                <Send className="w-4 h-4" />
+              </Button>
+            </form>
+          </div>
+
+          <Resources />
+        </div>
       </div>
     </div>
   );
