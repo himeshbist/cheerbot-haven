@@ -63,8 +63,16 @@ export const MoodSidebar = () => {
       duration: 2000,
     });
 
+    // Only pass the necessary data without the icon component
+    const moodData = {
+      label: mood.label,
+      quote: mood.quote,
+      music: mood.music,
+      color: mood.color
+    };
+
     // Navigate to the mood page with the selected mood data
-    navigate("/mood", { state: { mood } });
+    navigate("/mood", { state: { mood: moodData } });
   };
 
   return (
