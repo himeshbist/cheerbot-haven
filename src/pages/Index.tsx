@@ -3,10 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChatMessage } from "@/components/ChatMessage";
 import { Resources } from "@/components/Resources";
-import { Send, Heart, Bell, Menu } from "lucide-react";
+import { Send, Heart, Bell, Menu, HelpCircle } from "lucide-react";
 import { toast } from "sonner";
 import { MoodSidebar } from "@/components/MoodSidebar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface Message {
   text: string;
@@ -85,20 +90,31 @@ const Index = () => {
         </div>
         
         <div className="flex-1">
-          {/* Header with Logo and Notification */}
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-2">
               <Heart className="w-8 h-8 text-primary animate-pulse" />
               <span className="text-xl font-semibold text-primary">MindEase</span>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleNotificationClick}
-              className="hover:bg-primary/10"
-            >
-              <Bell className="w-6 h-6 text-primary" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="icon" className="hover:bg-primary/10">
+                    <HelpCircle className="w-6 h-6 text-primary" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <Resources />
+                </DialogContent>
+              </Dialog>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleNotificationClick}
+                className="hover:bg-primary/10"
+              >
+                <Bell className="w-6 h-6 text-primary" />
+              </Button>
+            </div>
           </div>
 
           <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-4 mb-4 transition-all duration-300 hover:shadow-xl">
@@ -132,8 +148,6 @@ const Index = () => {
               </Button>
             </form>
           </div>
-
-          <Resources />
         </div>
       </div>
     </div>
