@@ -114,6 +114,13 @@ const Index = () => {
               >
                 <Bell className="w-6 h-6 text-primary" />
               </Button>
+              <Button
+                variant="outline"
+                onClick={() => window.location.href = '/auth'}
+                className="ml-2"
+              >
+                Sign In
+              </Button>
             </div>
           </div>
 
