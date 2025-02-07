@@ -120,12 +120,12 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F5F3FF] to-[#EFF6FF] p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#E5DEFF] via-[#FFDEE2] to-[#FEF7CD] p-4">
       <div className="flex w-full max-w-6xl mx-auto">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-6 w-6" />
+            <Button variant="ghost" size="icon" className="md:hidden hover:bg-white/20 backdrop-blur-sm">
+              <Menu className="h-6 w-6 text-primary" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 bg-transparent border-none">
@@ -138,16 +138,20 @@ const Index = () => {
         </div>
         
         <div className="flex-1">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 bg-white/30 backdrop-blur-sm p-4 rounded-2xl shadow-lg">
             <div className="flex items-center gap-2">
-              <Heart className="w-8 h-8 text-primary animate-pulse" />
-              <span className="text-xl font-semibold text-primary">MindEase</span>
-              <span className="text-sm text-gray-600">Good {timeOfDay}! {moodEmojis[currentMood as keyof typeof moodEmojis]}</span>
+              <Heart className="w-8 h-8 text-primary animate-float" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                MindEase
+              </span>
+              <span className="text-sm bg-white/40 backdrop-blur-sm px-3 py-1 rounded-full text-primary font-medium">
+                Good {timeOfDay}! {moodEmojis[currentMood as keyof typeof moodEmojis]}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" size="icon" className="hover:bg-primary/10">
+                  <Button variant="ghost" size="icon" className="hover:bg-white/20 backdrop-blur-sm">
                     <HelpCircle className="w-6 h-6 text-primary" />
                   </Button>
                 </DialogTrigger>
@@ -159,42 +163,50 @@ const Index = () => {
                 variant="ghost"
                 size="icon"
                 onClick={handleNotificationClick}
-                className="hover:bg-primary/10"
+                className="hover:bg-white/20 backdrop-blur-sm"
               >
                 <Bell className="w-6 h-6 text-primary" />
               </Button>
               <Button
                 variant="outline"
                 onClick={() => window.location.href = '/auth'}
-                className="ml-2"
+                className="bg-white/50 hover:bg-white/70 backdrop-blur-sm text-primary font-medium"
               >
                 Sign In
               </Button>
             </div>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-4 mb-4 transition-all duration-300 hover:shadow-xl">
+          <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-4 transition-all duration-300 hover:shadow-xl border border-white/50">
             <div className="text-center mb-6">
-              <h1 className="text-2xl font-semibold text-primary mb-2">Your Personal Space for Emotional Support</h1>
-              <p className="text-sm text-gray-600">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-2 animate-pulse-gentle">
+                Your Personal Space for Emotional Support
+              </h1>
+              <p className="text-sm text-gray-600 max-w-lg mx-auto">
                 Share your thoughts and feelings - I'm here to listen and support you through every mood.
               </p>
-              <div className="flex justify-center gap-4 mt-4">
+              <div className="flex justify-center gap-4 mt-6">
                 {Object.entries(moodEmojis).map(([mood, emoji]) => (
                   <Button
                     key={mood}
                     variant={currentMood === mood ? "default" : "ghost"}
                     onClick={() => setCurrentMood(mood)}
-                    className="px-4 py-2 rounded-full transition-all duration-300"
+                    className={`px-6 py-3 rounded-full transition-all duration-300 ${
+                      currentMood === mood
+                        ? "bg-primary text-white shadow-lg scale-105"
+                        : "hover:bg-white/50 backdrop-blur-sm"
+                    }`}
                   >
-                    <span className="mr-2">{emoji}</span>
-                    {mood.charAt(0).toUpperCase() + mood.slice(1)}
+                    <span className="mr-2 text-lg">{emoji}</span>
+                    <span className="font-medium">
+                      {mood.charAt(0).toUpperCase() + mood.slice(1)}
+                    </span>
                   </Button>
                 ))}
               </div>
             </div>
 
-            <div className="h-[400px] overflow-y-auto mb-4 space-y-4 pr-4">
+            <div className="h-[400px] overflow-y-auto mb-4 space-y-4 pr-4 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
               {messages.map((message, index) => (
                 <ChatMessage
                   key={index}
@@ -210,11 +222,11 @@ const Index = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Tell me how you're feeling..."
-                className="flex-1"
+                className="flex-1 bg-white/50 backdrop-blur-sm border-white/50 focus:border-primary/50 placeholder:text-gray-500"
               />
               <Button 
                 type="submit" 
-                className="bg-primary hover:bg-primary/90 transition-colors"
+                className="bg-primary hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl"
               >
                 <Send className="w-4 h-4" />
               </Button>
@@ -222,11 +234,11 @@ const Index = () => {
           </div>
 
           <div className="flex justify-center gap-4 mt-4">
-            <Button variant="ghost" className="text-primary hover:bg-primary/10">
+            <Button variant="ghost" className="bg-white/30 hover:bg-white/50 backdrop-blur-sm text-primary hover:text-primary/80 font-medium px-6">
               <Music className="w-4 h-4 mr-2" />
               Calming Playlist
             </Button>
-            <Button variant="ghost" className="text-primary hover:bg-primary/10">
+            <Button variant="ghost" className="bg-white/30 hover:bg-white/50 backdrop-blur-sm text-primary hover:text-primary/80 font-medium px-6">
               <Coffee className="w-4 h-4 mr-2" />
               Self-Care Tips
             </Button>
